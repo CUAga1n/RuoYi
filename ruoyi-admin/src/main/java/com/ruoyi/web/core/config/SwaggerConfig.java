@@ -1,5 +1,6 @@
 package com.ruoyi.web.core.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,13 @@ import springfox.documentation.spring.web.plugins.Docket;
 @Configuration
 public class SwaggerConfig
 {
+    private RuoYiConfig ruoYiConfig;
+
+    @Autowired
+    public void setRuoYiConfig(RuoYiConfig ruoYiConfig) {
+        this.ruoYiConfig = ruoYiConfig;
+    }
+
     /** 是否开启swagger */
     @Value("${swagger.enabled}")
     private boolean enabled;
@@ -59,9 +67,9 @@ public class SwaggerConfig
                 // 描述
                 .description("描述：用于管理集团旗下公司的人员信息,具体包括XXX,XXX模块...")
                 // 作者信息
-                .contact(new Contact(RuoYiConfig.getName(), null, null))
+                .contact(new Contact(ruoYiConfig.getName(), null, null))
                 // 版本
-                .version("版本号:" + RuoYiConfig.getVersion())
+                .version("版本号:" + ruoYiConfig.getVersion())
                 .build();
     }
 }
